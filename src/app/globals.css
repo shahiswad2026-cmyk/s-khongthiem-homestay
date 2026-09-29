@@ -1,0 +1,271 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* ---- S. Khongthiem brand palette ---- */
+  --color-forest: #214e3b;
+  --color-evergreen: #153a2d;
+  --color-leaf: #86b879;
+  --color-sage: #dce9d6;
+  --color-sage-soft: #ecf3e7;
+  --color-ivory: #faf9f3;
+  --color-wood: #9a6b45;
+  --color-wood-soft: #c9a177;
+  --color-charcoal: #26332c;
+  --color-muted-ink: #617168;
+
+  /* ---- shadcn token mapping (light only) ---- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.875rem;
+  --background: #faf9f3;
+  --foreground: #26332c;
+  --primary: #214e3b;
+  --primary-foreground: #faf9f3;
+  --border: #e4e6dd;
+  --input: #dfe3da;
+  --ring: #86b879;
+  --destructive: #b3402f;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-sage);
+  color: var(--color-evergreen);
+}
+
+/* Refined focus states */
+:focus-visible {
+  outline: 2px solid var(--color-leaf);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Elegant thin scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: #c4d2c0;
+  border-radius: 8px;
+  border: 2px solid var(--color-ivory);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-leaf);
+}
+
+/* ---------- Typography helpers ---------- */
+.font-display {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+}
+
+/* Section label — small but comfortably readable on 360px screens */
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Consistent vertical rhythm for major sections */
+.section-y {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+@media (min-width: 640px) {
+  .section-y {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-y {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+/* Subtle hairline divider used between same-tone sections */
+.hairline-t {
+  border-top: 1px solid color-mix(in srgb, var(--color-sage) 75%, transparent);
+}
+
+/* ---------- Motion ---------- */
+@keyframes kenburns {
+  from {
+    transform: scale(1) translateY(0);
+  }
+  to {
+    transform: scale(1.085) translateY(-1.2%);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2.5%);
+  }
+}
+
+.animate-hero-text {
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-hero-text-1 {
+  animation-delay: 0.15s;
+}
+.animate-hero-text-2 {
+  animation-delay: 0.3s;
+}
+.animate-hero-text-3 {
+  animation-delay: 0.45s;
+}
+.animate-hero-text-4 {
+  animation-delay: 0.6s;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero progress bar */
+.hero-progress-fill {
+  transform-origin: left;
+  animation: progressFill linear forwards;
+}
+
+/* Subtle image hover zoom (pointer-fine devices only, so touch stays calm) */
+@media (hover: hover) {
+  .img-zoom {
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .img-zoom,
+  .img-zoom-parent:hover .img-zoom {
+    transform: scale(1.05);
+  }
+}
+.img-zoom {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hide scrollbars for snap carousels */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Date / select input polish */
+.enquiry-field {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Native date picker indicator tuned to the brand */
+.enquiry-field::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+  cursor: pointer;
+}
+.enquiry-field::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .hero-progress-fill {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
